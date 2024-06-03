@@ -4,9 +4,9 @@ val OPENAI_MODEL = arrayOf("gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4", "custo
 val AI_ENGINES = arrayOf("OpenAI", "Custom", "Azure", "XingHuo")
 
 const val ENGINE_SERVER = "http://api-ailab.pkulaw.com/openai/chat/completions/"
-const val ENGINE_RESPONSE_FORMAT = "\$.choices[0].delta.content"
+const val ENGINE_RESPONSE_FORMAT = "$.choices[0].delta.content"
 const val ENGINE_REQUEST_BODY_FORMAT =
-    "{ \"customFields\": {\"model\": \"gpt-4o\", \"stream\": true}, \"messageKeys\": {\"role\": \"role\", \"content\": \"content\"} }"
+    """{ "customFields": {"model": "gpt-4o", "stream": true}, "messageKeys": {"role": "role", "content": "content"} }"""
 
 
 enum class AIEngines {
