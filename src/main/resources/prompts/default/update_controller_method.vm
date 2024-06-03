@@ -3,11 +3,13 @@
 
 - 只返回 Controller 对应接口的关键函数。
 - 不做解释，只返回对应的关键函数。
+- 使用jboss的@Path等方法注解。
 - 你最后返回的代码示例如下：
 // {you should return CRUD method in here}
 ```java
-@{http method}Mapping("{xxxx}")
-@ApiOperation(value = "xxxx", notes = "xxxx")
+@Path(value="{xxxx}")
+@{http method}
+@Produces(value="{xxxx}")
 public {methodReturnType} {methodName}({methodParams}) {
     {methodBody}
 }

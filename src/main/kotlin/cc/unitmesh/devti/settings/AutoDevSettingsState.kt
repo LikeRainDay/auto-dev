@@ -4,13 +4,11 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
-import com.intellij.openapi.diagnostic.Logger
 import com.intellij.util.xmlb.Converter
 import com.intellij.util.xmlb.XmlSerializerUtil
 import com.intellij.util.xmlb.annotations.OptionTag
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
 
 @State(name = "cc.unitmesh.devti.settings.DevtiSettingsState", storages = [Storage("DevtiSettings.xml")])
 class AutoDevSettingsState : PersistentStateComponent<AutoDevSettingsState> {
@@ -24,7 +22,7 @@ class AutoDevSettingsState : PersistentStateComponent<AutoDevSettingsState> {
 
     var aiEngine = DEFAULT_AI_ENGINE
     var customOpenAiHost = ""
-    var customEngineServer = ""
+    var customEngineServer = ENGINE_SERVER
     var customEngineToken = ""
     var customPrompts = ""
     var customModel = ""
@@ -43,7 +41,7 @@ class AutoDevSettingsState : PersistentStateComponent<AutoDevSettingsState> {
     /**
      * should be a json path
      */
-    var customEngineResponseFormat = ""
+    var customEngineResponseFormat = ENGINE_RESPONSE_FORMAT
     /**
      * should be a json
      * {
@@ -54,7 +52,7 @@ class AutoDevSettingsState : PersistentStateComponent<AutoDevSettingsState> {
      *
      * @see docs/custom-llm-server.md
      */
-    var customEngineRequestFormat = ""
+    var customEngineRequestFormat = ENGINE_REQUEST_BODY_FORMAT
 
     @OptionTag(value = "lastCheckTime", converter = ZonedDateTimeConverter::class)
     var lastCheck: ZonedDateTime? = null

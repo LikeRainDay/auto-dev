@@ -2,7 +2,78 @@
 {spec}
 - 只返回修改完的函数代码，不做解释。
 - 请确保 service 类的名称与 {controllerName} 相关的 service 类的名称一致。
-- 请参考标准的 RESTful API 设计规范，尽量使用标准的 HTTP 方法和状态码。
+- 接口非分页返回值使用com.pkulaw.common.core.util包下的R类的方法
+```
+public class R<T> implements Serializable {
+
+    // 返回标记：成功标记=200，失败标记=1
+    private String code;
+
+    // 返回信息
+    private String msg;
+
+    // 数据
+    private T data;
+
+    public static <T> R<T> ok() {
+        return restResult(null, CommonConstants.SUCCESS, null);
+    }
+
+    public static <T> R<T> ok(T data) {
+        return restResult(data, CommonConstants.SUCCESS, null);
+    }
+
+    public static <T> R<T> ok(T data, String msg) {
+        return restResult(data, CommonConstants.SUCCESS, msg);
+    }
+}
+```
+- 接口分页返回值用com.pkulaw.common.core.util包下的PageResult类的方法
+```
+public class RPage<T> extends R<List<T>> {
+
+    private PageInfo pageInfo;
+
+    private List<TabInfos> tabInfos;
+
+    public static <T> RPage<T> ok(List<T> data, PageInfo pageInfo, List<TabInfos> tabInfos) {
+        return getApiResult(data, pageInfo, tabInfos);
+    }
+
+    public static <T> RPage<T> ok(List<T> data, PageInfo pageInfo) {
+        return getApiResult(data, pageInfo, null);
+    }
+}
+```
+- 使用yapi注释标准对类,参数和返回结果进行详细介绍.
+- 请参考标准的 RESTful API 设计规范，尽量使用标准的 HTTP 方法和状态码, 使用Jboss作为controller层详细参考如下代码段。
+```
+@Slf4j
+@Path(value = "/user")
+@DubboService(protocol = "rest")
+public class UserController implements UserService {
+
+    @Autowired
+    public BusUserService busUserService;
+
+    @Path(value = "/queryMysqlUserName")
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @Override
+    @SneakyThrows
+    public R<String> queryUserName(@QueryParam(value = "id") String id) {
+        return busUserService.queryUserName(id);
+    }
+
+    @Path(value = "/insertUserMysql")
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Override
+    public R<String> insertUserMysql(User user) {
+        return busUserService.insertUserMysql(user);
+    }
+}
+```
 
 ###
 // {controllerName} 相关信息如下：

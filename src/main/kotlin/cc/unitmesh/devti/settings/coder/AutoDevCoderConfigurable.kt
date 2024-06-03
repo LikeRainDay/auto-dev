@@ -4,6 +4,9 @@ import cc.unitmesh.devti.AutoDevBundle
 import cc.unitmesh.devti.custom.schema.INLAY_PROMPTS_FILE_NAME
 import cc.unitmesh.devti.fullWidthCell
 import cc.unitmesh.devti.gui.component.JsonLanguageField
+import cc.unitmesh.devti.settings.ENGINE_SERVER
+import cc.unitmesh.devti.settings.ENGINE_RESPONSE_FORMAT
+import cc.unitmesh.devti.settings.ENGINE_REQUEST_BODY_FORMAT
 import cc.unitmesh.devti.settings.ResponseType
 import cc.unitmesh.devti.settings.testLLMConnection
 import com.intellij.openapi.components.service
@@ -33,9 +36,9 @@ class AutoDevCoderConfigurable(private val project: Project) : BoundConfigurable
     private val maxTokenLengthParam = JTextField()
     private val delaySecondsParam: JTextField = JTextField()
     private val customEngineResponseTypeParam: ComboBox<String> = ComboBox(ResponseType.values().map { it.name }.toArray(emptyArray()));
-    private val customEngineResponseFormatParam = JTextField()
-    private val customEngineRequestBodyFormatParam = JTextField()
-    private val customEngineServerParam = JTextField()
+    private val customEngineResponseFormatParam = JTextField(ENGINE_RESPONSE_FORMAT)
+    private val customEngineRequestBodyFormatParam = JTextField(ENGINE_REQUEST_BODY_FORMAT)
+    private val customEngineServerParam = JTextField(ENGINE_SERVER)
     private val customEngineTokenParam = JPasswordField()
     private val customEnginePrompt = JsonLanguageField(project, "", "Custom your prompt here",  INLAY_PROMPTS_FILE_NAME)
 
@@ -148,12 +151,13 @@ class AutoDevCoderConfigurable(private val project: Project) : BoundConfigurable
                     componentGet = { it.text },
                     componentSet = { component, value -> component.text = value },
                     prop = state::customEngineServerParam.toMutableProperty()
+
                 )
         }
         row(AutoDevBundle.message("settings.autodev.coder.customEngineTokenParam")) {
             fullWidthCell(customEngineTokenParam)
                 .bind(
-                    componentGet = { it.text },
+                    componentGet = { it.text  },
                     componentSet = { component, value -> component.text = value },
                     prop = state::customEngineTokenParam.toMutableProperty()
                 )

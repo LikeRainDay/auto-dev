@@ -3,17 +3,24 @@ package cc.unitmesh.devti.settings
 val OPENAI_MODEL = arrayOf("gpt-3.5-turbo", "gpt-3.5-turbo-16k", "gpt-4", "custom")
 val AI_ENGINES = arrayOf("OpenAI", "Custom", "Azure", "XingHuo")
 
+const val ENGINE_SERVER = "http://api-ailab.pkulaw.com/openai/chat/completions/"
+const val ENGINE_RESPONSE_FORMAT = "\$.choices[0].delta.content"
+const val ENGINE_REQUEST_BODY_FORMAT =
+    "{ \"customFields\": {\"model\": \"gpt-4o\", \"stream\": true}, \"messageKeys\": {\"role\": \"role\", \"content\": \"content\"} }"
+
+
 enum class AIEngines {
     OpenAI, Custom, Azure, XingHuo
 }
 
-val GIT_TYPE = arrayOf("Github" , "Gitlab")
+val GIT_TYPE = arrayOf("Github", "Gitlab")
 val DEFAULT_GIT_TYPE = GIT_TYPE[0]
+
 enum class XingHuoApiVersion(val value: Double) {
     V1(1.1), V2(2.1), V3(3.1), V3_5(3.5);
 
     companion object {
-        fun of(str: String): XingHuoApiVersion  = when (str) {
+        fun of(str: String): XingHuoApiVersion = when (str) {
             "V1" -> V1
             "V2" -> V2
             "V3" -> V3
@@ -28,7 +35,7 @@ enum class ResponseType {
 }
 
 
-val DEFAULT_AI_ENGINE = AI_ENGINES[0]
+val DEFAULT_AI_ENGINE = AI_ENGINES[1]
 
 val DEFAULT_AI_MODEL = OPENAI_MODEL[0]
 
