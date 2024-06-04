@@ -2,6 +2,7 @@
 {spec}
 - 每个 Request，Response，Entity 请使用新的 markdown 代码块（```java）。
 - 每个 Request，Response，Entity 请使用独立的 markdown 代码块。
+- 根据上下文增加对应文件的import.
 - 如果已经存在 Entity，请不要返回新的。
 - 你的返回代码应该要完整。
 - 你的返回示例代码如下：
@@ -28,10 +29,10 @@ public class {responseName} {
 
 // {if not exist}
 ```java
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="tw_{tableName}")
+@Table(name="tb_{tableName}")
 public class {entityName} {
     {entityField}
 }

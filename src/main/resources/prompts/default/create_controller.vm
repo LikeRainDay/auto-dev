@@ -2,7 +2,8 @@
 {spec}
 - 只返回修改完的函数代码，不做解释。
 - 请确保 service 类的名称与 {controllerName} 相关的 service 类的名称一致。
-- 接口非分页返回值使用com.pkulaw.common.core.util包下的R类的方法
+- 根据上下文增加对应文件的import.
+- 接口非分页返回值使用com.pkulaw.common.core.util包下的R类的方法.
 ```
 public class R<T> implements Serializable {
 
@@ -48,6 +49,13 @@ public class RPage<T> extends R<List<T>> {
 - 使用yapi注释标准对类,参数和返回结果进行详细介绍.
 - 请参考标准的 RESTful API 设计规范，尽量使用标准的 HTTP 方法和状态码, 使用Jboss作为controller层详细参考如下代码段。
 ```
+import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+
 @Slf4j
 @Path(value = "/user")
 @DubboService(protocol = "rest")
